@@ -1,0 +1,55 @@
+#myreactapp {
+	background-color: #F2F1F0;
+	padding: 20px;
+}
+
+h1 {
+	color: #4a4a4a;
+}
+
+h2 {
+	color: #007299;
+}
+
+#myreactapp form input[type='radio'] {
+	display: none;
+}
+
+#myreactapp form input[type='radio']:checked + label, #myreactapp form input[type='checkbox']:checked + label {
+    background-color: #0091b3;
+    color: #fff;
+    font-weight: 500;
+}
+
+#myreactapp form input[type='radio'] + label, #myreactapp form input[type='checkbox'] + label {
+    font-size: 1.5em;
+    font-weight: 400;
+    color: #4a4a4a;
+    padding: 0.5em;
+    margin: 0em;
+    background-color: #fff;
+    border-radius: 2.7rem;
+	text-align: center;
+	width: 100%;
+	border: 2px solid #CECDCD;
+}
+
+#myreactapp form span.error input[type='radio'] + label, #myreactapp form span.error input[type='checkbox'] + label {
+	border: 2px solid #D90000;
+}
+
+.checkitem {
+	width: 48%;
+    float: left;
+    margin: 1%;
+}
+
+hr {
+	clear: both;
+}
+
+#moreDetail {
+	background-color: #E7E7E7;
+	text-align: center;
+	padding: 20px;
+}
