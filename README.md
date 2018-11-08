@@ -5,7 +5,7 @@ This git is all about how to insert a simple ReactJS Form into your Drupal websi
 
 It is done by including the required JS files, adding in a HTML Div to get re-rendered, and then targeting it properly.
 
-# 1. Add the JS
+# Setup
 
 In a template file, or a preprocess function you need to include the following:
 ```
@@ -27,3 +27,21 @@ I have a block on my test site the following HTML:
 ```
 
 And then ReactJS does everything else for me.
+
+# Current state
+
+Currently only the Energy and Water options at the start show any conditional questions on the second page.
+
+There is no top navigation.
+
+The only form validation is the first two fields on the first page.
+
+# What was learned
+
+Well, it was good to learn how to embed ReactJS in the theme layer in order to develop more complex behaviour that may have otherwise required a PaaS platform.
+
+# Todo
+
+Attempt consumption of a static CSV file for data calculations
+
+Attempt consumption of content from another Drupal site
