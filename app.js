@@ -70,13 +70,37 @@ class NameForm extends React.Component {
       occupiedHours: '',
       showMore: false,
       formIsValid: true,
+      csvFile: '',
     };
 
     // Bind all functions to This
     this.handleChange     = this.handleChange.bind(this);
     this.handleNavigation = this.handleNavigation.bind(this);
     this.toggleMore       = this.toggleMore.bind(this);
+    this.readCsvFile      = this.readCsvFile.bind(this);
   }
+  
+  readCsvFile = file => {
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = () => {
+      if (rawFile.readyState === 4) {
+        if (rawFile.status === 200 || rawFile.status == 0) {
+          var allText = rawFile.responseText;
+          allText = allText.split('\r\n');
+          var newArray = [];
+          for (var i in allText) {
+            var cake = allText[i].split(',');
+            newArray.push(cake);
+          }
+          this.setState({
+            csvFile: newArray
+          });
+        }
+      }
+    };
+    rawFile.send(null);
+  };
 
   // Global field change handler
   handleChange(event) {
@@ -196,13 +220,26 @@ class NameForm extends React.Component {
     }));
     event.preventDefault();
   }
-
+  
+  componentWillMount() {
+    this.readCsvFile("../themes/react/myApp/data.csv");
+  }
+  
   render() {
+    
+    const csvValue = (rating) => {
+      for (var i in this.state.csvFile) {
+        if (this.state.csvFile[i][0] === rating) {
+          return this.state.csvFile[i][1];
+        }
+      }
+    }
+    
     return (
       <form>
         
         { this.state.currentPage === 'one' && 
-          <div id="page1">          
+          <div id="page1">
           
             <h1>Rating details</h1>
             
@@ -369,7 +406,6 @@ class NameForm extends React.Component {
             />
           
           </div>
-        
         }
         
         { this.state.currentPage === 'three' && 
@@ -377,9 +413,8 @@ class NameForm extends React.Component {
           
             { this.state.ratingSelected === 'Energy' && 
               <div id="energyResult">
-                <h1>Your estimated Energy rating is x star with GreenPower</h1>
+                <h1>Your estimated Energy rating is { csvValue(this.state.ratingSelected) } star with GreenPower</h1>
                 <p>The energy intensity of the building is x MJ/m2.</p>
-                <p>Your estimated rating without GreenPower is x star.</p>
                 <hr />
                 { !this.state.showMore && 
                   <button onClick={this.toggleMore}>More Detail</button>
@@ -400,10 +435,9 @@ class NameForm extends React.Component {
             
             { this.state.ratingSelected === 'Water' && 
               <div id="waterResult">
-                <h1>Your estimated Water rating is x star with recycled water</h1>
+                <h1>Your estimated Water rating is { csvValue(this.state.ratingSelected) } star with recycled water</h1>
                 <hr />
                 <p>The normalised water consumption of the base building is {this.state.totalWater} kL/m2 p.a.</p>
-                <p>Your estimated rating without recycled water is x star.</p>
                 { !this.state.showMore && 
                   <button onClick={this.toggleMore}>More Detail</button>
                 }
