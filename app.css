@@ -1,55 +1,103 @@
 #myreactapp {
-	background-color: #F2F1F0;
-	padding: 20px;
+  background-color: #F2F1F0;
+  padding: 20px;
 }
 
 h1 {
-	color: #4a4a4a;
+  color: #4a4a4a;
 }
 
 h2 {
-	color: #007299;
+  color: #007299;
 }
 
 #myreactapp form input[type='radio'] {
-	display: none;
+  display: none;
 }
 
 #myreactapp form input[type='radio']:checked + label, #myreactapp form input[type='checkbox']:checked + label {
-    background-color: #0091b3;
-    color: #fff;
-    font-weight: 500;
+  background-color: #0091b3;
+  color: #fff;
+  font-weight: 500;
 }
 
 #myreactapp form input[type='radio'] + label, #myreactapp form input[type='checkbox'] + label {
-    font-size: 1.5em;
-    font-weight: 400;
-    color: #4a4a4a;
-    padding: 0.5em;
-    margin: 0em;
-    background-color: #fff;
-    border-radius: 2.7rem;
-	text-align: center;
-	width: 100%;
-	border: 2px solid #CECDCD;
+  font-size: 1.2em;
+  font-weight: 400;
+  color: #4a4a4a;
+  padding: 0.2em;
+  margin: 0em;
+  background-color: #fff;
+  border-radius: 2.7rem;
+  text-align: center;
+  width: 100%;
+  border: 2px solid #CECDCD;
 }
 
 #myreactapp form span.error input[type='radio'] + label, #myreactapp form span.error input[type='checkbox'] + label {
-	border: 2px solid #D90000;
+  border: 2px solid #D90000;
 }
 
 .checkitem {
-	width: 48%;
-    float: left;
-    margin: 1%;
+  width: 23%;
+  float: left;
+  margin: 6px 1%;
 }
 
 hr {
-	clear: both;
+  clear: both;
 }
 
 #moreDetail {
-	background-color: #E7E7E7;
-	text-align: center;
-	padding: 20px;
+  background-color: #E7E7E7;
+  text-align: center;
+  padding: 20px;
+}
+
+.textStyleInput {
+  font-size: 1.2em;
+  padding: 0.2em;
+  margin: 0 0 0 1%;
+  border: 2px solid #CECDCD;
+  border-radius: 30px;
+  text-align: center;
+}
+
+input.textStyleInput::-webkit-outer-spin-button,
+input.textStyleInput::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.actionButton {
+  background-color: #0091b3;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.5em;
+  padding: 5px 15px;
+  margin: 0em;
+  border: 2px solid #CECDCD;
+  border-radius: 50px;
+  float: right;
+}
+
+.actionButton.actionButtonLeft {
+  float: none;
+}
+
+.actionButton:hover {
+  background-color: #007C99;
+}
+
+.clearfix {
+  clear: both;
+  display: block;
+}
+
+.moreDetail {
+  float: none;
+  margin: 0 auto;
+  width: 170px;
+  display: block;
 }

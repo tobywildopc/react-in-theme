@@ -295,10 +295,11 @@ class NameForm extends React.Component {
             
             <h2>What is the postcode of the building?</h2>
             <input
+              maxlength="4"
+              className="textStyleInput" 
               name="postcode"
-              type="number"
-              min="0"
-              max="9999"
+              pattern="\d*"
+              type="text"
               value={this.state.postcode}
               onChange={this.handleChange}
             />
@@ -306,11 +307,13 @@ class NameForm extends React.Component {
             <hr />
             
             <input
+              className="actionButton"
               name="two"
               type="submit"
               value="Next"
               onClick={this.handleNavigation}
             />
+            <div className="clearfix"></div>
           </div>
         }
         
@@ -321,6 +324,7 @@ class NameForm extends React.Component {
           
             <h2>What is the floor space of the building?</h2>
             <input
+              className="textStyleInput" 
               name="floorSpace"
               type="text"
               value={this.state.floorSpace}
@@ -331,6 +335,7 @@ class NameForm extends React.Component {
             
             <h2>How many hours per week is the building occupied?</h2>
             <input
+              className="textStyleInput" 
               name="occupiedHours"
               type="text"
               value={this.state.occupiedHours}
@@ -345,6 +350,7 @@ class NameForm extends React.Component {
                 
                 <h2>Total electricity use for 12 months</h2>
                 <input
+                  className="textStyleInput" 
                   name="kWHours"
                   type="text"
                   value={this.state.kWHours}
@@ -355,6 +361,7 @@ class NameForm extends React.Component {
                 
                 <h2>What percentage of the total electricity use is GreenPower?</h2>
                 <input
+                  className="textStyleInput" 
                   name="greenPerc"
                   type="text"
                   value={this.state.greenPerc}
@@ -371,6 +378,7 @@ class NameForm extends React.Component {
                 
                 <h2>Total water consumption for 12 months</h2>
                 <input
+                  className="textStyleInput" 
                   name="totalWater"
                   type="text"
                   value={this.state.totalWater}
@@ -381,6 +389,7 @@ class NameForm extends React.Component {
                 
                 <h2>What percentage of the total water consumption is externally supplied recycled water?</h2>
                 <input
+                  className="textStyleInput" 
                   name="waterPerc"
                   type="text"
                   value={this.state.waterPerc}
@@ -392,6 +401,7 @@ class NameForm extends React.Component {
             }
             
             <input
+              className="actionButton actionButtonLeft"
               name="one"
               type="submit"
               value="Back"
@@ -399,6 +409,7 @@ class NameForm extends React.Component {
             />
             
             <input
+              className="actionButton"
               name="three"
               type="submit"
               value="Next"
@@ -414,10 +425,10 @@ class NameForm extends React.Component {
             { this.state.ratingSelected === 'Energy' && 
               <div id="energyResult">
                 <h1>Your estimated Energy rating is { csvValue(this.state.ratingSelected) } star with GreenPower</h1>
-                <p>The energy intensity of the building is x MJ/m2.</p>
+                <p>The above star rating is pulled from a CSV file based on the first few questions.</p>
                 <hr />
                 { !this.state.showMore && 
-                  <button onClick={this.toggleMore}>More Detail</button>
+                  <button className="actionButton moreDetail" onClick={this.toggleMore}>More Detail</button>
                 }
                 { this.state.showMore && 
                   <div id="moreDetail">
@@ -427,7 +438,7 @@ class NameForm extends React.Component {
                     <div>
                        <div>{this.state.kWHours} kg CO2-e p.a. Total greenhouse gas emissions, scope 1 and 2 with GreenPower</div>
                     </div>
-                    <button onClick={this.toggleMore}>Less Detail</button>
+                    <button className="actionButton moreDetail" onClick={this.toggleMore}>Less Detail</button>
                   </div>
                 }
               </div>
@@ -436,10 +447,10 @@ class NameForm extends React.Component {
             { this.state.ratingSelected === 'Water' && 
               <div id="waterResult">
                 <h1>Your estimated Water rating is { csvValue(this.state.ratingSelected) } star with recycled water</h1>
+                <p>The above star rating is pulled from a CSV file based on the first few questions.</p>
                 <hr />
-                <p>The normalised water consumption of the base building is {this.state.totalWater} kL/m2 p.a.</p>
                 { !this.state.showMore && 
-                  <button onClick={this.toggleMore}>More Detail</button>
+                  <button className="actionButton moreDetail" onClick={this.toggleMore}>More Detail</button>
                 }
                 { this.state.showMore && 
                   <div id="moreDetail">
@@ -449,7 +460,7 @@ class NameForm extends React.Component {
                     <div>
                        <div>{this.state.totalWater} kL p.a. Total water consumption with recycled water</div>
                     </div>
-                    <button onClick={this.toggleMore}>Less Detail</button>
+                    <button className="actionButton moreDetail" onClick={this.toggleMore}>Less Detail</button>
                   </div>
                 }
               </div>
@@ -458,6 +469,7 @@ class NameForm extends React.Component {
             <br />
             
             <input
+              className="actionButton actionButtonLeft"
               name="two"
               type="submit"
               value="Back"
