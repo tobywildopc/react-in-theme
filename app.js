@@ -1,7 +1,7 @@
 'use strict';
 
-// Make a resuable checklist component
-class CheckList extends React.Component {
+// Make a resuable RadioList component
+class RadioList extends React.Component {
   render() {
     
     const ListItems = this.props.options.map((textValue, index) =>
@@ -14,6 +14,33 @@ class CheckList extends React.Component {
           type="radio"
           onChange={this.props.onChange}
           checked={ this.props.selected === textValue ? 'checked' : '' }
+        ></input>
+        <label htmlFor={"checkbox-" + this.props.section + "-" + index}>{textValue}</label>
+        <br />
+      </span>
+    );
+    
+    return (
+      <div>
+        { ListItems }
+      </div>
+    );
+  }  
+}
+
+class CheckList extends React.Component {
+  render() {
+    
+    const ListItems = this.props.options.map((textValue, index) =>
+      <span className={ this.props.errors.indexOf(this.props.section) > -1 ? "checkitem error" : "checkitem" } key={textValue}>      
+        <input
+          value={textValue}
+          data-section={this.props.section}
+          id={"checkbox-" + this.props.section + "-" + index}
+          name={this.props.section}
+          type="checkbox"
+          onChange={this.props.onChange}
+          checked={ this.props.selected.indexOf(textValue) > -1 ? 'checked' : '' }
         ></input>
         <label htmlFor={"checkbox-" + this.props.section + "-" + index}>{textValue}</label>
         <br />
@@ -59,6 +86,26 @@ class NameForm extends React.Component {
         'Whole facility',
         'Infrastructure',
       ],
+      waste: [
+        'General waste',
+        'Mixed recycling',
+        'Paper & cardboard',
+        'Cardboard (compacted)',
+        'Cardboard',
+        'Secure paper',
+        'Dry waste',
+        'Paper',
+        'Organics',
+        'Green waste',
+        'Soft plastics',
+        'Polystyrene',
+        'Glass',
+        'Cooking oil',
+        'E-waste',
+        'Batteries',
+        'Light globes/tubes',
+        'Printer cartridges',
+      ],
       errors: [],
       ratingSelected: '',
       buildingSelected: '',
@@ -71,6 +118,7 @@ class NameForm extends React.Component {
       showMore: false,
       formIsValid: true,
       csvFile: '',
+      wasteSelected: [],
     };
 
     // Bind all functions to This
@@ -178,6 +226,21 @@ class NameForm extends React.Component {
       this.setState({waterPerc: event.target.value});
     }
     
+    if (event.target.getAttribute('data-section') === 'waste') {
+      
+      let newValue = event.target.value;
+      if (this.state.wasteSelected.indexOf(newValue) === -1) {
+        var newArray = this.state.wasteSelected.slice();
+        newArray.push(newValue);
+        this.setState({wasteSelected:newArray})
+      }
+      else {
+        var original = this.state.wasteSelected;
+        var newArray = original.splice(this.state.wasteSelected.indexOf(newValue), 1);
+        this.setState({wasteSelected:original})
+      }
+    }
+    
   } 
 
   // Handling navigation and form validation
@@ -244,7 +307,7 @@ class NameForm extends React.Component {
             <h1>Rating details</h1>
             
             <h2>What type of rating would you like to estimate?</h2>
-            <CheckList
+            <RadioList
               errors={this.state.errors}
               selected={this.state.ratingSelected}
               section="rating"
@@ -255,7 +318,7 @@ class NameForm extends React.Component {
             <hr />
             
             <h2>What type of building?</h2>
-            <CheckList
+            <RadioList
               errors={this.state.errors}
               selected={this.state.buildingSelected}
               section="building"
@@ -268,7 +331,7 @@ class NameForm extends React.Component {
             { this.state.buildingSelected === 'Office' && 
               <div>
                 <h2>What is the scope of your rating?</h2>
-                <CheckList
+                <RadioList
                   errors={this.state.errors}
                   selected={this.state.officeSelected}
                   section="office"
@@ -282,7 +345,7 @@ class NameForm extends React.Component {
             { this.state.buildingSelected === 'Data centre' && 
               <div>
                 <h2>What is the scope of your rating?</h2>
-                <CheckList
+                <RadioList
                   errors={this.state.errors}
                   selected={this.state.dataSelected}
                   section="data"
@@ -295,7 +358,7 @@ class NameForm extends React.Component {
             
             <h2>What is the postcode of the building?</h2>
             <input
-              maxlength="4"
+              maxLength="4"
               className="textStyleInput" 
               name="postcode"
               pattern="\d*"
@@ -397,6 +460,24 @@ class NameForm extends React.Component {
                 /> %
                 
                 <hr />
+              </div>
+            }
+            
+            { this.state.ratingSelected === 'Waste' && 
+              <div id="water">
+                <h1>Waste types</h1>
+                
+                <h2>Select the waste types you’d like to enter data for.</h2>
+                <CheckList
+                  errors={this.state.errors}
+                  selected={this.state.wasteSelected}
+                  section="waste"
+                  options={this.state.waste}
+                  onChange={this.handleChange}
+                />
+                
+                <hr />
+                
               </div>
             }
             

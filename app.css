@@ -11,6 +11,7 @@ h2 {
   color: #007299;
 }
 
+#myreactapp form input[type="checkbox"], 
 #myreactapp form input[type='radio'] {
   display: none;
 }
