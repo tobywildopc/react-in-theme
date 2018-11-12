@@ -119,6 +119,7 @@ class NameForm extends React.Component {
       formIsValid: true,
       csvFile: '',
       wasteSelected: [],
+      wasteArray: [],
     };
 
     // Bind all functions to This
@@ -126,6 +127,8 @@ class NameForm extends React.Component {
     this.handleNavigation = this.handleNavigation.bind(this);
     this.toggleMore       = this.toggleMore.bind(this);
     this.readCsvFile      = this.readCsvFile.bind(this);
+    this.isInArrayKey     = this.isInArrayKey.bind(this);
+    this.wasteWeightValue = this.wasteWeightValue.bind(this);
   }
   
   readCsvFile = file => {
@@ -241,7 +244,38 @@ class NameForm extends React.Component {
       }
     }
     
-  } 
+    if (event.target.name === 'waste-weight') {
+      
+      var currentArray = this.state.wasteArray;
+      var dataSection  = event.target.getAttribute('data-section');
+      var dataValue    = event.target.value;
+      var indexVal     = this.isInArrayKey(currentArray, dataSection);
+      
+      if (indexVal === -1) {
+        const arrayInsert = {
+          [dataSection]: dataValue,
+        }
+        currentArray.push(arrayInsert);
+      }
+      else {
+        const arrayInsert = {
+          [dataSection]: dataValue,
+        }
+        currentArray.push(arrayInsert);
+        currentArray.splice(indexVal, 1);
+      }
+      this.setState({ wasteArray:currentArray })
+    }
+  }
+  
+  isInArrayKey(currentArray, dataSection) {
+    var fullArray = [];
+    for (var i in currentArray) {
+      var keyArray = (Object.keys(currentArray[i]));
+      fullArray.push(keyArray.toString());
+    }
+    return fullArray.indexOf(dataSection);
+  }
 
   // Handling navigation and form validation
   handleNavigation(event) {
@@ -274,6 +308,18 @@ class NameForm extends React.Component {
     }
     
     event.preventDefault();
+  }
+  
+  wasteWeightValue(textValue) {
+    
+    var currentArray = this.state.wasteArray;
+    var indexVal     = this.isInArrayKey(currentArray, textValue);
+        
+    if (typeof currentArray[indexVal] !== "undefined") {
+      if (typeof currentArray[indexVal][textValue] !== "undefined") {
+        return currentArray[indexVal][textValue];
+      }
+    }
   }
   
   // Toggle the 'More Detail' section
@@ -464,7 +510,7 @@ class NameForm extends React.Component {
             }
             
             { this.state.ratingSelected === 'Waste' && 
-              <div id="water">
+              <div id="waste">
                 <h1>Waste types</h1>
                 
                 <h2>Select the waste types you’d like to enter data for.</h2>
@@ -477,6 +523,22 @@ class NameForm extends React.Component {
                 />
                 
                 <hr />
+                
+                { this.state.wasteSelected.map((textValue, index) =>
+                  <div key={index}>
+                    <h3>{textValue}</h3>
+                    Total Weight <input
+                      data-section={textValue}
+                      className="textStyleInput" 
+                      name="waste-weight"
+                      type="text"
+                      value={ this.wasteWeightValue(textValue) }
+                      onChange={this.handleChange}
+                    /> kg
+                    <hr />
+                  </div>
+                
+                )}
                 
               </div>
             }
@@ -541,6 +603,23 @@ class NameForm extends React.Component {
                     <div>
                        <div>{this.state.totalWater} kL p.a. Total water consumption with recycled water</div>
                     </div>
+                    <button className="actionButton moreDetail" onClick={this.toggleMore}>Less Detail</button>
+                  </div>
+                }
+              </div>
+            }
+            
+            { this.state.ratingSelected === 'Waste' && 
+              <div id="wasteResult">
+                <h1>Your estimated Waste rating is { csvValue(this.state.ratingSelected) } star</h1>
+                <p>The above star rating is pulled from a CSV file based on the first few questions.</p>
+                <hr />
+                { !this.state.showMore && 
+                  <button className="actionButton moreDetail" onClick={this.toggleMore}>More Detail</button>
+                }
+                { this.state.showMore && 
+                  <div id="moreDetail">
+
                     <button className="actionButton moreDetail" onClick={this.toggleMore}>Less Detail</button>
                   </div>
                 }
