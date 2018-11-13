@@ -619,6 +619,14 @@ class NameForm extends React.Component {
                 }
                 { this.state.showMore && 
                   <div id="moreDetail">
+                  
+                  { this.state.wasteArray.map((textValue, index) =>
+                    <div key={index}>
+                      <h3>{JSON.stringify(textValue).replace(/"/g, '').split(':')[0].replace('{', '')}</h3>
+                      <h4>{JSON.stringify(textValue).replace(/"/g, '').split(':')[1].replace('}', '')}</h4>
+                      <hr />
+                    </div>
+                  )}
 
                     <button className="actionButton moreDetail" onClick={this.toggleMore}>Less Detail</button>
                   </div>
