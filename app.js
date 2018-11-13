@@ -297,6 +297,11 @@ class NameForm extends React.Component {
         newErrors.push("building");   
       }
       
+      if (this.state.postcode === '') {
+        formIsValid = false;
+        newErrors.push("postcode");   
+      }
+      
       // Set Errors
       this.setState({ errors: newErrors })
       
@@ -405,7 +410,7 @@ class NameForm extends React.Component {
             <h2>What is the postcode of the building?</h2>
             <input
               maxLength="4"
-              className="textStyleInput" 
+              className={ this.state.errors.indexOf('postcode') > -1 ? "textStyleInput error" : "textStyleInput" } 
               name="postcode"
               pattern="\d*"
               type="text"
@@ -623,7 +628,7 @@ class NameForm extends React.Component {
                   { this.state.wasteArray.map((textValue, index) =>
                     <div key={index}>
                       <h3>{JSON.stringify(textValue).replace(/"/g, '').split(':')[0].replace('{', '')}</h3>
-                      <h4>{JSON.stringify(textValue).replace(/"/g, '').split(':')[1].replace('}', '')}</h4>
+                      <h4>{JSON.stringify(textValue).replace(/"/g, '').split(':')[1].replace('}', '')} kg</h4>
                       <hr />
                     </div>
                   )}

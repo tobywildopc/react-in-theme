@@ -102,3 +102,7 @@ input.textStyleInput::-webkit-inner-spin-button {
   width: 170px;
   display: block;
 }
+
+.textStyleInput.error {
+  border-color: #D90000;
+}
